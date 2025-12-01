@@ -7,7 +7,8 @@ Este projeto foi desenvolvido como **Avaliação Prática (Prova)** da disciplin
 
 ---
 
-![Screenshot do Sistema](screenshot_mapa.png)  
+<img width="1020" height="586" alt="image" src="https://github.com/user-attachments/assets/d5d5ceaa-eae8-45f9-b731-d043de01b24b" />
+ 
 *(Tela principal exibindo uma rota importada com traçado no mapa e estatísticas)*
 
 ---
