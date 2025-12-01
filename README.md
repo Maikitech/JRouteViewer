@@ -80,7 +80,7 @@ Copiar código
 
 O `pom.xml` foi configurado com escopo `system` para utilizar esta dependência local:
 
-```xml
+## XML
 <dependency>
     <groupId>org.openstreetmap.jmapviewer</groupId>
     <artifactId>jmapviewer</artifactId>
@@ -88,7 +88,8 @@ O `pom.xml` foi configurado com escopo `system` para utilizar esta dependência 
     <scope>system</scope>
     <systemPath>${project.basedir}/lib/jmapviewer-2.24.jar</systemPath>
 </dependency>
-🚀 Como Executar
+
+## 🚀 Como Executar
 1️⃣ Clonar o Repositório
 Baixe o projeto para a sua máquina.
 
@@ -108,7 +109,7 @@ br.edu.ifrs.poo2.prova.view.TelaMapa
 📐 Modelagem de Dados (Hibernate)
 O sistema utiliza mapeamento Objeto-Relacional com relacionamento @OneToMany e CascadeType.ALL.
 
-🗂️ Rota (Pai)
+## 🗂️ Rota (Pai)
 Nome
 
 Descrição
@@ -117,7 +118,7 @@ Lista de pontos
 
 Relacionamento: uma rota possui vários PontoDeRota
 
-📌 PontoDeRota (Filho)
+## 📌 PontoDeRota (Filho)
 Latitude
 
 Longitude
@@ -133,6 +134,6 @@ Copiar código
 ./dados/mapadb
 na primeira execução.
 
-✍️ Desenvolvido por
+### ✍️ Desenvolvido por
 Maiki Scalvi
 Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul (IFRS) — Campus Veranópolis.
