@@ -1,60 +1,138 @@
-# JRouteViewer
+# 🗺️ JRouteViewer  
+### Visualizador e Rastreador de Rotas GPX
 
-# 🗺️ JRouteViewer (Visualizador de Rotas GPX)
+Sistema desktop desenvolvido em **Java** para importação, persistência e visualização de trilhas GPS (formato `.gpx`) utilizando mapeamento **OpenStreetMap**.
 
-Sistema desktop desenvolvido em Java para importação, persistência e visualização de rotas de GPS (formato GPX) sobre mapas interativos do OpenStreetMap.
+Este projeto foi desenvolvido como **Avaliação Prática (Prova)** da disciplina de *Programação Orientada a Objetos II*.
 
-Este projeto foi desenvolvido como avaliação prática da disciplina de **Programação Orientada a Objetos II**.
+---
 
-!<img width="1024" height="583" alt="image" src="https://github.com/user-attachments/assets/631af6b5-76b3-4676-b26f-81afcf85931b" />
+![Screenshot do Sistema](screenshot_mapa.png)  
+*(Tela principal exibindo uma rota importada com traçado no mapa e estatísticas)*
 
+---
 
-## 📋 Funcionalidades
+# 📋 Funcionalidades do Sistema
 
-O sistema atende aos 3 requisitos principais da avaliação:
+O software implementa integralmente todos os requisitos propostos na avaliação:
 
-### 1. Modelagem e Persistência (Hibernate + H2)
-* Mapeamento Objeto-Relacional (ORM) das entidades:
-    * **Rota:** Nome, descrição e lista de pontos.
-    * **PontoDeRota:** Latitude, longitude e elevação.
-* Relacionamento `@OneToMany` com persistência em cascata.
-* Banco de dados **H2 (File Mode)**, garantindo que os dados persistam entre execuções.
+## 1️⃣ Importação de Arquivos GPX
+- Leitura nativa de arquivos XML (`.gpx`) com `DocumentBuilder`.
+- Extração de metadados e pontos de rastreamento:
+  - Latitude  
+  - Longitude  
+  - Elevação  
+- Persistência automática no banco de dados ao importar.
+- Memorização do último diretório acessado pelo usuário.
 
-### 2. Importação de Arquivos GPX
-* Leitura nativa de arquivos XML (`.gpx`) utilizando `DocumentBuilder` (sem frameworks externos para o parse).
-* Extração automática de metadados e coordenadas (`lat`, `lon`, `ele`).
-* Persistência automática da rota e seus pontos no banco de dados após a importação.
-* **JFileChooser:** Filtro para arquivos `.gpx` e persistência do último diretório acessado (usando `java.util.prefs`).
+## 2️⃣ Visualização Geoespacial (Mapas)
+- Renderização interativa usando **JMapViewer** (OpenStreetMap).
+- Desenho vetorial da rota com *polyline* destacada.
+- **Controles de navegação:**
+  - Zoom via scroll do mouse
+  - Pan via botão direito
+- **Auto-Zoom:** enquadra automaticamente toda a rota importada.
 
-### 3. Visualização com JMapViewer
-* Renderização interativa do mapa (OpenStreetMap).
-* Desenho da rota utilizando `MapPolygon` (Polyline vermelha).
-* **Zoom Automático:** A visualização se ajusta para enquadrar toda a rota (`setDisplayToFitMapPolygons`).
-* **Estatísticas da Rota:** Cálculo e exibição de:
-    * Distância Total (Cálculo Euclidiano Plano).
-    * Ganho Total de Elevação.
-    * Perda Total de Elevação.
+## 3️⃣ Estatísticas da Rota
+- Cálculo automático e exibição de:
+  - **Distância Total**  
+    (método plano Euclidiano conforme especificação)
+  - **Ganho de Elevação**
+  - **Perda de Elevação**
 
-## 🛠️ Tecnologias Utilizadas
+## 4️⃣ Gerenciamento de Dados
+- Listagem de todas as rotas salvas no banco.
+- Visualização e reabertura de rotas anteriores.
 
-* **Linguagem:** Java 17+
-* **Interface Gráfica:** Java Swing (Desenhado com NetBeans/Matisse)
-* **Gerenciador de Dependências:** Maven
-* **ORM:** Hibernate (JPA)
-* **Banco de Dados:** H2 Database (Embedded)
-* **Mapas:** JMapViewer
-* **UI/UX:** FlatLaf (Look and Feel moderno)
+---
 
-## ⚙️ Instalação e Dependências (Modo Offline)
+# 🛠️ Tecnologias Utilizadas
 
-Devido a instabilidades nos repositórios públicos do OpenStreetMap, a biblioteca **JMapViewer** foi configurada em modo **offline** para garantir a compilação e execução durante a prova.
+| Componente       | Tecnologia |
+|------------------|------------|
+| Linguagem        | Java 17+ |
+| Interface        | Java Swing (NetBeans/Matisse) |
+| Look and Feel    | FlatLaf |
+| ORM              | Hibernate 6.4 (JPA) |
+| Banco de Dados   | H2 (modo arquivo) |
+| Mapas            | JMapViewer 2.24 |
+| Build/Projeto    | Maven |
 
-### Estrutura de Pastas Necessária
-Para que o Maven encontre a dependência, o projeto deve seguir esta estrutura:
+---
 
-```text
+# ⚙️ Instalação e Dependências (Modo Offline)
+
+Devido a instabilidades nos repositórios públicos de bibliotecas do OpenStreetMap, o projeto utiliza dependência **local** para garantir compilação offline.
+
+## 📁 Estrutura Obrigatória
+
+A pasta do projeto **deve** conter a seguinte estrutura:
+
 ProvaPoo2Mapas/
-├── lib/
-│   └── jmapviewer-2.24.jar  <-- ARQUIVO OBRIGATÓRIO
+├── pom.xml
 ├── src/
-└── pom.xml
+│ └── ...
+└── lib/ <-- PASTA OBRIGATÓRIA
+└── jmapviewer-2.24.jar <-- ARQUIVO OBRIGATÓRIO
+
+php-template
+Copiar código
+
+O `pom.xml` foi configurado com escopo `system` para utilizar esta dependência local:
+
+```xml
+<dependency>
+    <groupId>org.openstreetmap.jmapviewer</groupId>
+    <artifactId>jmapviewer</artifactId>
+    <version>2.24</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/lib/jmapviewer-2.24.jar</systemPath>
+</dependency>
+🚀 Como Executar
+1️⃣ Clonar o Repositório
+Baixe o projeto para a sua máquina.
+
+2️⃣ Verificar a Biblioteca
+Confirme que a pasta lib contém o arquivo jmapviewer-2.24.jar.
+
+3️⃣ Compilar o Projeto (Maven)
+bash
+Copiar código
+mvn clean install
+4️⃣ Executar a Aplicação
+Rode a classe principal:
+
+pgsql
+Copiar código
+br.edu.ifrs.poo2.prova.view.TelaMapa
+📐 Modelagem de Dados (Hibernate)
+O sistema utiliza mapeamento Objeto-Relacional com relacionamento @OneToMany e CascadeType.ALL.
+
+🗂️ Rota (Pai)
+Nome
+
+Descrição
+
+Lista de pontos
+
+Relacionamento: uma rota possui vários PontoDeRota
+
+📌 PontoDeRota (Filho)
+Latitude
+
+Longitude
+
+Elevação
+
+Referência à rota pai (ManyToOne)
+
+O banco H2 é criado automaticamente na pasta:
+
+bash
+Copiar código
+./dados/mapadb
+na primeira execução.
+
+✍️ Desenvolvido por
+Maiki Scalvi
+Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul (IFRS) — Campus Veranópolis.
